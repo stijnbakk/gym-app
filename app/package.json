@@ -69,6 +69,7 @@
 		"vitest-browser-svelte": "^2.0.1"
 	},
 	"dependencies": {
-		"@node-rs/argon2": "^2.0.2"
+		"@node-rs/argon2": "^2.0.2",
+		"pocketbase": "^0.26.6"
 	}
 }

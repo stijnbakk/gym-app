@@ -3,12 +3,14 @@
 declare global {
 	namespace App {
 		interface Locals {
+			// Custom auth (Drizzle-based)
 			user: import('$lib/server/auth').SessionValidationResult['user'];
 			session: import('$lib/server/auth').SessionValidationResult['session'];
+			// PocketBase auth
+			pbUser: import('$lib/server/pocketbase').PbUser | null;
 		}
 
 		// interface Error {}
-		// interface Locals {}
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
