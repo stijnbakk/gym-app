@@ -38,14 +38,10 @@ export function savePbAuthCookie(event: RequestEvent, pb: PocketBase) {
 	const exportedCookie = pb.authStore.exportToCookie();
 	const match = exportedCookie.match(/^pb_auth=([^;]+)/);
 
-	console.log('savePbAuthCookie - exportedCookie starts with:', exportedCookie.substring(0, 50));
-	console.log('savePbAuthCookie - match found:', !!match);
-
 	if (match && match[1]) {
-		console.log('savePbAuthCookie - setting cookie value starting with:', match[1].substring(0, 30));
 		event.cookies.set(pbCookieName, match[1], {
 			httpOnly: true,
-			secure: process.env.NODE_ENV === 'production',
+			secure: import.meta.env.PROD,
 			sameSite: 'lax',
 			path: '/',
 			maxAge: 60 * 60 * 24 * 7 // 7 days
