@@ -1,7 +1,8 @@
 import PocketBase from 'pocketbase';
 import type { RequestEvent } from '@sveltejs/kit';
+import { env } from '$env/dynamic/public';
 
-const POCKETBASE_URL = 'http://127.0.0.1:8090';
+const POCKETBASE_URL = env.PUBLIC_POCKETBASE_URL || 'http://127.0.0.1:8090';
 
 export const pbCookieName = 'pb_auth';
 
