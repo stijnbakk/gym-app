@@ -15,8 +15,12 @@ export const actions = {
 		const pb = createServerPb();
 
 		try {
-			await pb.collection('users').authWithPassword(email, password);
+			console.log('Attempting to authenticate user:', email);
+			console.log('PocketBase URL:', pb.baseUrl);
 
+			const authData = await pb.collection('users').authWithPassword(email, password);
+
+			console.log('Authentication successful for user:', authData.record?.email);
 			savePbAuthCookie({ cookies } as any, pb);
 
 			throw redirect(303, '/');
@@ -24,9 +28,21 @@ export const actions = {
 			if (error?.status === 303) {
 				throw error;
 			}
-			console.error('Login error:', error);
+			console.error('Login error details:', {
+				message: error?.message,
+				status: error?.status,
+				response: error?.response,
+				url: error?.url
+			});
+
+			// Provide more specific error message
+			let errorMessage = 'Invalid email or password';
+			if (error?.response?.message) {
+				errorMessage = error.response.message;
+			}
+
 			return fail(400, {
-				error: 'Invalid email or password',
+				error: errorMessage,
 				email
 			} as const);
 		}
